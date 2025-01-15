@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>FILMNGY</title>
+    <style>
+
+        .error {
+            color: red;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .success {
+            color: green;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .submitted-data {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+    </style>
+    <script>
+        function validateForm() {
+            let isValid = true;
+
+            
+            document.querySelectorAll('.error').forEach(el => el.textContent = '');
+            document.getElementById('successMessage').textContent = '';
+            document.getElementById('submittedData').innerHTML = '';  
+
+           
+            const name = document.getElementById('uname');
+            if (name.value.trim() === '') {
+                document.getElementById('nameError').textContent = 'Name is required.';
+                isValid = false;
+            }
+
+           
+            const email = document.getElementById('email');
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email.value)) {
+                document.getElementById('emailError').textContent = 'Enter a valid email address.';
+                isValid = false;
+            }
+
+          
+            const phone = document.getElementById('phone');
+            if (!/^[0-9]{10}$/.test(phone.value)) {
+                document.getElementById('phoneError').textContent = 'Enter a valid 10-digit phone number.';
+                isValid = false;
+            }
+
+      
+            if (!document.querySelector('input[name="satisfy"]:checked')) {
+                document.getElementById('satisfactionError').textContent = 'Please select your satisfaction level.';
+                isValid = false;
+            }
+
+            
+            const message = document.getElementById('msg');
+            if (message.value.trim() === '') {
+                document.getElementById('messageError').textContent = 'Message cannot be empty.';
+                isValid = false;
+            }
+
+           
+            if (isValid) {
+                document.getElementById('successMessage').textContent = 'Form submitted successfully!';
+
+                
+                const satisfaction = document.querySelector('input[name="satisfy"]:checked').value;
+                const submittedContent = `
+                    <h3>Submitted Data:</h3>
+                    <p><strong>Full Name:</strong> ${name.value}</p>
+                    <p><strong>Email Address:</strong> ${email.value}</p>
+                    <p><strong>Phone Number:</strong> ${phone.value}</p>
+                    <p><strong>Satisfaction:</strong> ${satisfaction}</p>
+                    <p><strong>Message:</strong> ${message.value}</p>
+                `;
+                document.getElementById('submittedData').innerHTML = submittedContent;
+            }
+        }
+
+     
+    </script>
+</head>
+<body>
+    <header>
+        <nav class="navigation">
+            <img src="logo.png" alt="Microsoft" class="logo">
+            <ul class="main-menu">
+                <li><a href="contactus.html">Contact us</a></li>
+                <li><a href="aboutus.html">About us</a></li>
+                <li><a href="Library.html">Library</a></li>
+                <li><a href="course.html">Courses</a></li>
+                <li><a href="index.html">Home</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="contactus-style">
+        <div class="form-box">
+            <div class="textup">
+                <h1 style="color: black;">Contact us</h1>
+                <i class="fa fa-solid fa-clock"></i>
+                It only takes two minutes
+            </div>
+            
+            <form>
+                <label for="uname">
+                    <i class="fa fa-solid fa-user"></i>
+                    Full Name:
+                </label>
+                <input type="text" id="uname" name="uname"  >
+                <span class="error" id="nameError"></span>
+
+                <label for="email">
+                    <i class="fa fa-solid fa-envelope"></i>
+                    Email Address:
+                </label>
+                <input type="email" id="email" name="email" >
+                <span class="error" id="emailError"></span>
+
+                <label for="phone">
+                    <i class="fa-solid fa-phone"></i>
+                    Phone No:
+                </label>
+                <input type="tel" id="phone" name="phone" maxlength="10" >
+                <span class="error" id="phoneError"></span>
+
+                <label>
+                    <i class="fa-solid fa-face-smile"></i>
+                    Do you satisfy with our service?
+                </label>
+                <div class="radio-group">
+                    <input type="radio" id="yes" name="satisfy" value="yes" checked>
+                    <label for="yes">Yes</label>
+
+                    <input type="radio" id="no" name="satisfy" value="no">
+                    <label for="no">No</label>
+                </div>
+
+                <label for="msg">
+                    <i class="fa-solid fa-comments" style="margin-right: 3px;"></i>
+                    Write your message:
+                </label>
+                <textarea id="msg" name="msg" rows="4" cols="10" required></textarea>
+                <span class="error" id="messageError"></span>
+                
+                <button type="button" onclick="validateForm()">Submit</button>
+            </form>
+
+            <div id="successMessage" class="success"></div>
+
+           
+            <div id="submittedData" class="submitted-data"></div>
+        </div>
+    </div>
+
+</body>
+</html>
